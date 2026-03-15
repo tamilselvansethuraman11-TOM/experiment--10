@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precision Motion | Elite Showroom</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .showroom-hero {
+            background: linear-gradient(to right, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .car-card:hover .car-image {
+            transform: scale(1.05);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .gold-accent {
+            color: #d4af37;
+        }
+
+        .bg-gold {
+            background-color: #d4af37;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+
+        /* Notification Toast */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #d4af37;
+            color: #000;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            bottom: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #toast.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @-webkit-keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @-webkit-keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100">
+
+    <!-- Notification Container -->
+    <div id="toast">Request Received</div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-crown gold-accent text-xl"></i>
+                <span class="text-xl font-bold tracking-tighter uppercase">Precision<span class="gold-accent">Elite</span></span>
+            </div>
+            <div class="hidden md:flex space-x-10 text-xs font-bold tracking-[0.2em]">
+                <a href="#inventory" class="hover:text-amber-500 transition-colors">INVENTORY</a>
+                <a href="#bespoke" class="hover:text-amber-500 transition-colors">BESPOKE SERVICE</a>
+                <a href="#locations" class="hover:text-amber-500 transition-colors">LOCATIONS</a>
+            </div>
+            <div class="flex items-center space-x-6">
+                <i class="fas fa-search cursor-pointer hover:text-amber-500"></i>
+                <button onclick="showToast('Booking Portal Opening...')" class="border border-amber-500/50 text-amber-500 px-6 py-2 rounded-sm text-xs font-bold hover:bg-amber-500 hover:text-black transition-all">
+                    BOOK TEST DRIVE
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="showroom-hero h-screen flex items-center px-6 md:px-24">
+        <div class="max-w-2xl">
+            <h2 class="gold-accent font-bold tracking-[0.4em] text-sm mb-4">THE CURATED COLLECTION</h2>
+            <h1 class="text-6xl md:text-8xl serif mb-8 leading-tight">Define Your <br><span class="italic">Legacy.</span></h1>
+            <p class="text-slate-400 text-lg mb-10 font-light leading-relaxed max-w-lg">
+                Welcome to the digital flagship of Precision Motion. Explore our most exclusive silhouettes, engineered for those who demand more than just transportation.
+            </p>
+            <div class="flex space-x-6">
+                <a href="#inventory" class="bg-white text-black px-10 py-4 font-bold text-sm hover:bg-amber-500 transition-all uppercase tracking-widest">View Models</a>
+                <button onclick="showToast('Loading Experience...')" class="flex items-center space-x-3 group">
+                    <span class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-amber-500 transition-all">
+                        <i class="fas fa-play text-xs"></i>
+                    </span>
+                    <span class="text-sm font-bold tracking-widest uppercase">The Experience</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Inventory -->
+    <section id="inventory" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div>
+                    <h2 class="text-amber-500 font-bold tracking-widest text-xs mb-2">CURRENT AVAILABILITY</h2>
+                    <h3 class="text-4xl serif">Featured Masterpieces</h3>
+                </div>
+                <div class="flex space-x-4">
+                    <button class="filter-btn px-6 py-2 border-b-2 border-amber-500 text-sm font-bold" onclick="filterGallery('ALL', this)">ALL</button>
+                    <button class="filter-btn px-6 py-2 border-b-2 border-transparent text-slate-500 text-sm font-bold hover:text-white transition-all" onclick="filterGallery('ELECTRIC', this)">ELECTRIC</button>
+                    <button class="filter-btn px-6 py-2 border-b-2 border-transparent text-slate-500 text-sm font-bold hover:text-white transition-all" onclick="filterGallery('PERFORMANCE', this)">PERFORMANCE</button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Car 1 -->
+                <div class="car-card group cursor-pointer" onclick="showToast('Opening Aura Phantom Specs...')">
+                    <div class="relative overflow-hidden aspect-[16/10] mb-6 bg-slate-900">
+                        <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&q=80&w=1200" 
+                             alt="Performance Coupe" 
+                             class="car-image w-full h-full object-cover transition-transform duration-700"
+                             onerror="this.src='https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=1200'">
+                        <div class="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1 text-[10px] font-bold tracking-widest uppercase border border-white/10">
+                            In Stock
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="text-xl serif mb-1">Aura Phantom GTR</h4>
+                            <p class="text-slate-500 text-xs tracking-widest uppercase">V12 Hybrid • 850 HP</p>
+                        </div>
+                        <span class="text-amber-500 font-bold">$345,000</span>
+                    </div>
+                    <hr class="my-6 border-white/5 group-hover:border-amber-500/30 transition-all">
+                    <div class="flex justify-between text-xs font-bold text-slate-400">
+                        <span><i class="fas fa-tachometer-alt mr-2"></i> 2.4s (0-60)</span>
+                        <span><i class="fas fa-battery-full mr-2"></i> 450mi Range</span>
+                    </div>
+                </div>
+
+                <!-- Car 2 -->
+                <div class="car-card group cursor-pointer" onclick="showToast('Opening Nebula EV Specs...')">
+                    <div class="relative overflow-hidden aspect-[16/10] mb-6 bg-slate-900">
+                        <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=1200" 
+                             alt="Luxury Sedan" 
+                             class="car-image w-full h-full object-cover transition-transform duration-700"
+                             onerror="this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1200'">
+                        <div class="absolute top-4 right-4 bg-amber-600 px-3 py-1 text-[10px] font-bold tracking-widest uppercase text-white">
+                            New Arrival
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="text-xl serif mb-1">Nebula EV Grand Tourer</h4>
+                            <p class="text-slate-500 text-xs tracking-widest uppercase">Quad Motor • 1200 HP</p>
+                        </div>
+                        <span class="text-amber-500 font-bold">$189,000</span>
+                    </div>
+                    <hr class="my-6 border-white/5 group-hover:border-amber-500/30 transition-all">
+                    <div class="flex justify-between text-xs font-bold text-slate-400">
+                        <span><i class="fas fa-tachometer-alt mr-2"></i> 1.9s (0-60)</span>
+                        <span><i class="fas fa-bolt mr-2"></i> Ultra Fast Charge</span>
+                    </div>
+                </div>
+
+                <!-- Car 3 -->
+                <div class="car-card group cursor-pointer" onclick="showToast('Opening Vanguard Specs...')">
+                    <div class="relative overflow-hidden aspect-[16/10] mb-6 bg-slate-900">
+                        <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&q=80&w=1200" 
+                             alt="Luxury SUV" 
+                             class="car-image w-full h-full object-cover transition-transform duration-700"
+                             onerror="this.src='https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&q=80&w=1200'">
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="text-xl serif mb-1">Vanguard SUV Platinum</h4>
+                            <p class="text-slate-500 text-xs tracking-widest uppercase">Twin-Turbo V8 • Luxury</p>
+                        </div>
+                        <span class="text-amber-500 font-bold">$125,000</span>
+                    </div>
+                    <hr class="my-6 border-white/5 group-hover:border-amber-500/30 transition-all">
+                    <div class="flex justify-between text-xs font-bold text-slate-400">
+                        <span><i class="fas fa-users mr-2"></i> 7 Seats</span>
+                        <span><i class="fas fa-mountain mr-2"></i> Terrain Pro</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bespoke Customization -->
+    <section id="bespoke" class="bg-slate-900 py-32">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-20 items-center">
+            <div class="relative">
+                <div class="absolute -top-10 -left-10 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl"></div>
+                <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=1200" 
+                     alt="Bespoke Interior" 
+                     class="relative z-10 rounded-sm shadow-2xl"
+                     onerror="this.src='https://images.unsplash.com/photo-1617814076367-b759c7d8e738?auto=format&fit=crop&q=80&w=1200'">
+                <div class="absolute -bottom-6 -right-6 bg-slate-950 p-8 border border-white/10 z-20 hidden md:block">
+                    <p class="text-amber-500 font-bold text-2xl serif mb-1">100% Unique</p>
+                    <p class="text-slate-500 text-xs uppercase tracking-widest">Tailored to your identity</p>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-amber-500 font-bold tracking-widest text-xs mb-4 uppercase">The Atelier</h2>
+                <h3 class="text-5xl serif mb-8 leading-tight">Bespoke Excellence</h3>
+                <p class="text-slate-400 mb-8 leading-relaxed">
+                    Our master artisans work directly with you to select rare materials, custom paint finishes, and personalized interior embroidery. At Precision Elite, we don't just sell cars; we commission art.
+                </p>
+                <div class="grid grid-cols-2 gap-8 mb-10 text-sm">
+                    <div>
+                        <h5 class="font-bold mb-2 flex items-center"><span class="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></span> Fine Leather</h5>
+                        <p class="text-slate-500">Hand-selected hides from Northern Europe.</p>
+                    </div>
+                    <div>
+                        <h5 class="font-bold mb-2 flex items-center"><span class="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></span> Exotic Woods</h5>
+                        <p class="text-slate-500">Sustainable walnut and carbon fiber weaves.</p>
+                    </div>
+                </div>
+                <button onclick="showToast('Loading Configuration Tool...')" class="bg-white text-black px-8 py-4 font-bold text-xs uppercase tracking-widest hover:bg-amber-500 transition-all">Start Configuration</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Form -->
+    <section class="py-32 px-6 bg-black">
+        <div class="max-w-3xl mx-auto text-center">
+            <h3 class="text-4xl serif mb-6">Reserve Your Experience</h3>
+            <p class="text-slate-500 mb-12">Private viewings are available by appointment only. Please provide your details and a concierge will contact you within 2 hours.</p>
+            
+            <form id="appointmentForm" class="grid md:grid-cols-2 gap-6 text-left" onsubmit="handleFormSubmit(event)">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Full Name</label>
+                    <input type="text" id="formName" required placeholder="John Doe" class="w-full bg-slate-900 border border-white/10 p-4 focus:border-amber-500 outline-none transition-all">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Email Address</label>
+                    <input type="email" id="formEmail" required placeholder="john@example.com" class="w-full bg-slate-900 border border-white/10 p-4 focus:border-amber-500 outline-none transition-all">
+                </div>
+                <div class="md:col-span-2 space-y-2">
+                    <label class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Preferred Model</label>
+                    <select id="formModel" class="w-full bg-slate-900 border border-white/10 p-4 focus:border-amber-500 outline-none transition-all appearance-none">
+                        <option>Aura Phantom GTR</option>
+                        <option>Nebula EV Grand Tourer</option>
+                        <option>Vanguard SUV Platinum</option>
+                        <option>Custom Commission</option>
+                    </select>
+                </div>
+                <button type="submit" class="md:col-span-2 bg-amber-600 text-white p-5 font-bold uppercase tracking-[0.2em] text-sm hover:bg-amber-500 transition-all">Request Private Session</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+            <div class="col-span-2">
+                <div class="flex items-center space-x-2 mb-6">
+                    <i class="fas fa-crown gold-accent text-xl"></i>
+                    <span class="text-xl font-bold tracking-tighter uppercase">Precision<span class="gold-accent text-amber-500">Elite</span></span>
+                </div>
+                <p class="text-slate-500 text-sm max-w-sm mb-8">
+                    The luxury retail division of Precision Motion Manufacturing Group. 
+                </p>
+                <div class="flex space-x-6 text-slate-500">
+                    <a href="javascript:void(0)" onclick="showToast('Redirecting to Facebook...')" class="hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="javascript:void(0)" onclick="showToast('Redirecting to Twitter...')" class="hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="javascript:void(0)" onclick="showToast('Redirecting to Instagram...')" class="hover:text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div id="locations">
+                <h6 class="text-xs font-bold tracking-widest uppercase mb-6">Showrooms</h6>
+                <ul class="text-slate-500 text-sm space-y-3">
+                    <li class="cursor-pointer hover:text-white" onclick="showToast('Viewing Monaco details...')">Monaco Flagship</li>
+                    <li class="cursor-pointer hover:text-white" onclick="showToast('Viewing LA details...')">Los Angeles Boutique</li>
+                    <li class="cursor-pointer hover:text-white" onclick="showToast('Viewing Dubai details...')">Dubai Marina</li>
+                    <li class="cursor-pointer hover:text-white" onclick="showToast('Viewing Tokyo details...')">Tokyo Ginza</li>
+                </ul>
+            </div>
+            <div>
+                <h6 class="text-xs font-bold tracking-widest uppercase mb-6">Ownership</h6>
+                <ul class="text-slate-500 text-sm space-y-3">
+                    <li class="cursor-pointer hover:text-white" onclick="showToast('Loading Service Portal...')">Service & Warranty</li>
+                    <li class="cursor-pointer hover:text-white" onclick="showToast('Accessing Elite Club...')">Elite Club Access</li>
+                    <li class="cursor-pointer hover:text-white" onclick="showToast('Searching Pre-Owned...')">Certified Pre-Owned</li>
+                    <li class="cursor-pointer hover:text-white" onclick="showToast('Viewing Catalog...')">Parts & Accessories</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 pt-12 mt-12 border-t border-white/5 text-center">
+            <p class="text-[10px] text-slate-600 uppercase tracking-widest">© 2024 Precision Elite Showroom. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Notification logic
+        function showToast(message) {
+            const x = document.getElementById("toast");
+            x.innerHTML = message;
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+
+        // Filter Logic
+        function filterGallery(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('border-amber-500');
+                b.classList.add('border-transparent', 'text-slate-500');
+            });
+            btn.classList.add('border-amber-500');
+            btn.classList.remove('border-transparent', 'text-slate-500');
+            showToast("Filtering for: " + category);
+        }
+
+        // Form Logic
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('formName').value;
+            showToast("Thank you, " + name + ". Your request has been sent.");
+            document.getElementById('appointmentForm').reset();
+        }
+
+        // Smooth scroll with null check to prevent errors
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === "#") return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Sticky nav effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-3');
+                nav.classList.remove('py-5');
+                nav.classList.add('bg-black/80');
+            } else {
+                nav.classList.add('py-5');
+                nav.classList.remove('py-3');
+                nav.classList.remove('bg-black/80');
+            }
+        });
+    </script>
+</body>
+</html>
